@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:width="2300dp"
+    android:height="1700dp"
+    android:viewportWidth="2300"
+    android:viewportHeight="1700"
+    tools:ignore="VectorRaster">
+
+    <!-- Mid-distance mountains -->
+    <path
+        android:pathData="M0,900 L300,500 L600,700 L900,400 L1200,600 L1500,300 L1800,500 L2100,250 L2300,400 L2300,1700 L0,1700 Z"
+        android:fillColor="#8FBC8F" />
+
+    <!-- Mountain details/ridges -->
+    <path
+        android:pathData="M200,800 L350,600 L500,750 Z"
+        android:fillColor="#7BA77B" />
+
+    <path
+        android:pathData="M800,650 L950,450 L1100,600 Z"
+        android:fillColor="#7BA77B" />
+
+    <path
+        android:pathData="M1400,550 L1550,350 L1700,500 Z"
+        android:fillColor="#7BA77B" />
+
+</vector>

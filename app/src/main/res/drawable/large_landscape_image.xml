@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:width="2048dp"
+    android:height="1536dp"
+    android:viewportWidth="2048"
+    android:viewportHeight="1536"
+    tools:ignore="VectorRaster">
+
+    <!-- Sky gradient -->
+    <path
+        android:pathData="M0,0 L2048,0 L2048,800 L0,800 Z"
+        android:fillColor="#87CEEB" />
+
+    <!-- Mountains -->
+    <path
+        android:pathData="M0,600 L300,300 L600,500 L900,200 L1200,400 L1500,150 L1800,350 L2048,250 L2048,800 L0,800 Z"
+        android:fillColor="#8FBC8F" />
+
+    <!-- Ground -->
+    <path
+        android:pathData="M0,800 L2048,800 L2048,1536 L0,1536 Z"
+        android:fillColor="#228B22" />
+
+    <!-- Trees (using path to draw circles) -->
+    <path
+        android:pathData="M200,620 A80,80 0 1,1 200,780 A80,80 0 1,1 200,620 Z"
+        android:fillColor="#006400" />
+
+    <path
+        android:pathData="M500,690 A60,60 0 1,1 500,810 A60,60 0 1,1 500,690 Z"
+        android:fillColor="#228B22" />
+
+    <path
+        android:pathData="M800,650 A70,70 0 1,1 800,790 A70,70 0 1,1 800,650 Z"
+        android:fillColor="#32CD32" />
+
+    <path
+        android:pathData="M1200,675 A65,65 0 1,1 1200,805 A65,65 0 1,1 1200,675 Z"
+        android:fillColor="#006400" />
+
+    <path
+        android:pathData="M1600,655 A75,75 0 1,1 1600,805 A75,75 0 1,1 1600,655 Z"
+        android:fillColor="#228B22" />
+
+    <!-- Sun (using path to draw circle) -->
+    <path
+        android:pathData="M1700,120 A80,80 0 1,1 1700,280 A80,80 0 1,1 1700,120 Z"
+        android:fillColor="#FFD700" />
+
+    <!-- Clouds (using path to draw ellipses) -->
+    <path
+        android:pathData="M280,150 A120,40 0 1,1 520,150 A120,40 0 1,1 280,150 Z"
+        android:fillColor="#FFFFFF" />
+
+    <path
+        android:pathData="M900,180 A100,35 0 1,1 1100,180 A100,35 0 1,1 900,180 Z"
+        android:fillColor="#F0F8FF" />
+
+    <path
+        android:pathData="M1320,120 A80,30 0 1,1 1480,120 A80,30 0 1,1 1320,120 Z"
+        android:fillColor="#FFFFFF" />
+
+    <!-- Water/Lake (using path to draw ellipse) -->
+    <path
+        android:pathData="M424,1200 A600,200 0 1,1 1624,1200 A600,200 0 1,1 424,1200 Z"
+        android:fillColor="#4682B4" />
+
+</vector>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:width="2200dp"
+    android:height="1600dp"
+    android:viewportWidth="2200"
+    android:viewportHeight="1600"
+    tools:ignore="VectorRaster">
+
+    <!-- Tree trunks -->
+    <path
+        android:pathData="M180,1100 L220,1100 L220,1400 L180,1400 Z"
+        android:fillColor="#8B4513" />
+
+    <path
+        android:pathData="M480,1150 L520,1150 L520,1400 L480,1400 Z"
+        android:fillColor="#8B4513" />
+
+    <path
+        android:pathData="M780,1120 L820,1120 L820,1400 L780,1400 Z"
+        android:fillColor="#8B4513" />
+
+    <path
+        android:pathData="M1180,1140 L1220,1140 L1220,1400 L1180,1400 Z"
+        android:fillColor="#8B4513" />
+
+    <path
+        android:pathData="M1580,1110 L1620,1110 L1620,1400 L1580,1400 Z"
+        android:fillColor="#8B4513" />
+
+    <path
+        android:pathData="M1880,1130 L1920,1130 L1920,1400 L1880,1400 Z"
+        android:fillColor="#8B4513" />
+
+    <!-- Tree crowns -->
+    <path
+        android:pathData="M120,1000 A80,100 0 1,1 280,1000 A80,100 0 1,1 120,1000 Z"
+        android:fillColor="#228B22" />
+
+    <path
+        android:pathData="M420,1050 A80,100 0 1,1 580,1050 A80,100 0 1,1 420,1050 Z"
+        android:fillColor="#32CD32" />
+
+    <path
+        android:pathData="M720,1020 A80,100 0 1,1 880,1020 A80,100 0 1,1 720,1020 Z"
+        android:fillColor="#228B22" />
+
+    <path
+        android:pathData="M1120,1040 A80,100 0 1,1 1280,1040 A80,100 0 1,1 1120,1040 Z"
+        android:fillColor="#006400" />
+
+    <path
+        android:pathData="M1520,1010 A80,100 0 1,1 1680,1010 A80,100 0 1,1 1520,1010 Z"
+        android:fillColor="#32CD32" />
+
+    <path
+        android:pathData="M1820,1030 A80,100 0 1,1 1980,1030 A80,100 0 1,1 1820,1030 Z"
+        android:fillColor="#228B22" />
+
+    <!-- Bushes -->
+    <path
+        android:pathData="M350,1300 A60,40 0 1,1 470,1300 A60,40 0 1,1 350,1300 Z"
+        android:fillColor="#90EE90" />
+
+    <path
+        android:pathData="M950,1320 A50,35 0 1,1 1050,1320 A50,35 0 1,1 950,1320 Z"
+        android:fillColor="#90EE90" />
+
+    <path
+        android:pathData="M1450,1310 A55,38 0 1,1 1560,1310 A55,38 0 1,1 1450,1310 Z"
+        android:fillColor="#90EE90" />
+
+</vector>

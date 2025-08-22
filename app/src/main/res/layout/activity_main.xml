@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    tools:context=".MainActivity">
+
+    <!-- Layer 1: Background - Xa nhất (sky + distant mountains) -->
+    <ImageView
+        android:id="@+id/backgroundLayer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:scaleX="1.2"
+        android:scaleY="1.2"
+        android:src="@drawable/background"
+        android:scaleType="centerCrop"
+        android:contentDescription="Background Layer" />
+
+    <!-- Layer 2: Mountain Layer - Trung cảnh -->
+    <ImageView
+        android:id="@+id/mountainLayer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:scaleX="1.15"
+        android:scaleY="1.15"
+        android:scaleType="centerCrop"
+        android:contentDescription="Mountain Layer" />
+
+    <!-- Layer 3: Trees Layer - Gần hơn -->
+    <ImageView
+        android:id="@+id/treesLayer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:scaleX="1.1"
+        android:scaleY="1.1"
+        android:src="@drawable/people"
+        android:scaleType="centerCrop"
+        android:contentDescription="Trees Layer" />
+
+    <!-- Layer 4: Foreground - Gần nhất (rocks, grass, objects) -->
+    <ImageView
+        android:id="@+id/foregroundLayer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:scaleX="1.05"
+        android:scaleY="1.05"
+        android:src="@drawable/foreground_layer"
+        android:scaleType="centerCrop"
+        android:contentDescription="Foreground Layer" />
+
+    <!-- UI Overlay -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="@drawable/ui_overlay_gradient">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3D PARALLAX"
+            android:textSize="32sp"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-condensed"
+            android:letterSpacing="0.15"
+            android:layout_marginBottom="8dp"
+            android:shadowColor="#000000"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="4" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DEPTH LAYERS"
+            android:textSize="14sp"
+            android:textColor="#E0E0E0"
+            android:fontFamily="sans-serif-light"
+            android:letterSpacing="0.3"
+            android:layout_marginBottom="32dp"
+            android:shadowColor="#000000"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="2" />
+
+    </LinearLayout>
+
+</FrameLayout>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:width="2400dp"
+    android:height="1800dp"
+    android:viewportWidth="2400"
+    android:viewportHeight="1800"
+    tools:ignore="VectorRaster">
+
+    <!-- Sky gradient -->
+    <path
+        android:pathData="M0,0 L2400,0 L2400,1200 L0,1200 Z">
+        <aapt:attr name="android:fillColor" xmlns:aapt="http://schemas.android.com/aapt">
+            <gradient
+                android:startColor="#87CEEB"
+                android:endColor="#E0F6FF"
+                android:type="linear"
+                android:angle="90" />
+        </aapt:attr>
+    </path>
+
+    <!-- Distant mountains -->
+    <path
+        android:pathData="M0,800 L400,400 L800,600 L1200,300 L1600,500 L2000,200 L2400,400 L2400,1200 L0,1200 Z"
+        android:fillColor="#B0C4DE" />
+
+    <!-- Clouds -->
+    <path
+        android:pathData="M300,100 A80,30 0 1,1 460,100 A80,30 0 1,1 300,100 Z"
+        android:fillColor="#FFFFFF" />
+
+    <path
+        android:pathData="M800,150 A100,40 0 1,1 1000,150 A100,40 0 1,1 800,150 Z"
+        android:fillColor="#F8F8FF" />
+
+    <path
+        android:pathData="M1500,80 A120,35 0 1,1 1740,80 A120,35 0 1,1 1500,80 Z"
+        android:fillColor="#FFFFFF" />
+
+    <!-- Sun -->
+    <path
+        android:pathData="M2000,150 A90,90 0 1,1 2000,330 A90,90 0 1,1 2000,150 Z"
+        android:fillColor="#FFD700" />
+
+    <!-- Ground base -->
+    <path
+        android:pathData="M0,1200 L2400,1200 L2400,1800 L0,1800 Z"
+        android:fillColor="#90EE90" />
+
+</vector>
