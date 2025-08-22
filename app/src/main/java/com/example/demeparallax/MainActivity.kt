@@ -9,6 +9,7 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Bundle
 import android.util.DisplayMetrics
+import android.util.Log
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import kotlin.math.max
@@ -183,6 +184,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         treesLayer.translationX = treesMoveX
         treesLayer.translationY = treesMoveY
 
+
         val foregroundMoveX = max(-maxMoveX * 0.4f, min(currentX * foregroundSpeed, maxMoveX * 0.4f))
         val foregroundMoveY = max(-maxMoveY * 0.4f, min(currentY * foregroundSpeed, maxMoveY * 0.4f))
         foregroundLayer.translationX = foregroundMoveX
@@ -215,9 +217,9 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         val limitedMoveX = max(-maxBackgroundMoveX, min(moveX, maxBackgroundMoveX))
         val limitedMoveY = max(-maxBackgroundMoveY, min(moveY, maxBackgroundMoveY))
 
-        // Áp dụng di chuyển
-        val finalX = baseCenterX + limitedMoveX
-        val finalY = baseCenterY + limitedMoveY
+        // Đảo ngược hướng di chuyển
+        val finalX = baseCenterX - limitedMoveX // Đổi dấu từ + thành -
+        val finalY = baseCenterY - limitedMoveY // Đổi dấu từ + thành -
 
         // Thiết lập matrix
         backgroundMatrix.reset()
@@ -225,6 +227,6 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         backgroundMatrix.postTranslate(finalX, finalY)
 
         backgroundLayer.imageMatrix = backgroundMatrix
-        backgroundLayer.invalidate() // Đảm bảo vẽ lại
+        backgroundLayer.invalidate()
     }
 }
