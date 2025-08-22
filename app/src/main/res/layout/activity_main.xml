@@ -6,16 +6,13 @@
     android:background="#000000"
     tools:context=".MainActivity">
 
-    <!-- Layer 1: Background - Xa nhất (sky + distant mountains) -->
+    <!-- Layer 1: Background - Xa nhất -->
     <ImageView
         android:id="@+id/backgroundLayer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:scaleX="1.2"
-        android:scaleY="1.2"
-        android:src="@drawable/background"
         android:scaleType="centerCrop"
+        android:src="@drawable/background"
         android:contentDescription="Background Layer" />
 
     <!-- Layer 2: Mountain Layer - Trung cảnh -->
@@ -24,9 +21,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:scaleX="1.15"
-        android:scaleY="1.15"
-        android:scaleType="centerCrop"
         android:contentDescription="Mountain Layer" />
 
     <!-- Layer 3: Trees Layer - Gần hơn -->
@@ -34,23 +28,18 @@
         android:id="@+id/treesLayer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:scaleX="1.1"
-        android:scaleY="1.1"
-        android:src="@drawable/people"
         android:scaleType="centerCrop"
+        android:layout_gravity="center"
+        android:src="@drawable/people"
         android:contentDescription="Trees Layer" />
 
-    <!-- Layer 4: Foreground - Gần nhất (rocks, grass, objects) -->
+    <!-- Layer 4: Foreground - Gần nhất -->
     <ImageView
         android:id="@+id/foregroundLayer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:scaleX="1.05"
-        android:scaleY="1.05"
         android:src="@drawable/foreground_layer"
-        android:scaleType="centerCrop"
         android:contentDescription="Foreground Layer" />
 
     <!-- UI Overlay -->
