@@ -21,10 +21,10 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     private var accelerometer: Sensor? = null
 
     // Các layer parallax (từ xa đến gần)
-    private lateinit var backgroundLayer: ImageView      // Layer 1 - Xa nhất (dùng Matrix)
-    private lateinit var mountainLayer: ImageView       // Layer 2 - Núi xa (dùng translation)
-    private lateinit var treesLayer: ImageView          // Layer 3 - Cây cối (dùng translation)
-    private lateinit var foregroundLayer: ImageView     // Layer 4 - Gần nhất (dùng translation)
+    private lateinit var backgroundLayer: ImageView      // Layer 1 - Xa nhất
+    private lateinit var mountainLayer: ImageView       // Layer 2 - Núi xa
+    private lateinit var treesLayer: ImageView          // Layer 3 - Cây cối
+    private lateinit var foregroundLayer: ImageView     // Layer 4 - Gần nhất
 
     // Vị trí hiện tại của mỗi layer
     private var currentX = 0f
@@ -34,26 +34,34 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     private var screenWidth = 0
     private var screenHeight = 0
 
-    // Matrix chỉ cho background layer
+    // Matrix cho từng layer
     private val backgroundMatrix = Matrix()
+    private val mountainMatrix = Matrix()
+    private val treesMatrix = Matrix()
+    private val foregroundMatrix = Matrix()
 
     // Thông tin ảnh cho việc tính toán giới hạn
     private var backgroundImageWidth = 0f
     private var backgroundImageHeight = 0f
+    private var mountainImageWidth = 0f
+    private var mountainImageHeight = 0f
+    private var treesImageWidth = 0f
+    private var treesImageHeight = 0f
+    private var foregroundImageWidth = 0f
+    private var foregroundImageHeight = 0f
 
     // Độ nhạy và tốc độ di chuyển cho từng layer
     private val sensitivity = 8f
-    private val backgroundSpeed = 3f      // Background dùng Matrix
-    private val mountainSpeed = 2f        // Mountain dùng translation
-    private val treesSpeed = 1f          // Trees dùng translation
-    private val foregroundSpeed = 0.8f     // Foreground dùng translation
+    private val backgroundSpeed = 6f      // Background - di chuyển nhanh nhất
+    private val mountainSpeed = 5.5f        // Mountain - di chuyển trung bình
+    private val treesSpeed = 5.5f          // Trees - di chuyển chậm hơn
+    private val foregroundSpeed = 3f     // Foreground - di chuyển chậm nhất
 
-    // Scale factor cho background (để có thể di chuyển)
+    // Scale factor cho từng layer (để có thể di chuyển)
     private val backgroundScale = 1.3f
-
-    // Giới hạn di chuyển cho các layer translation
-    private var maxMoveX = 100f
-    private var maxMoveY = 60f
+    private val mountainScale = 1.2f
+    private val treesScale = 1.15f
+    private val foregroundScale = 1.1f
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,59 +88,81 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     }
 
     private fun setupParallaxLayers() {
-        // CHỈ background layer dùng Matrix
+        // TẤT CẢ các layer đều dùng Matrix
         backgroundLayer.scaleType = ImageView.ScaleType.MATRIX
+        mountainLayer.scaleType = ImageView.ScaleType.MATRIX
+        treesLayer.scaleType = ImageView.ScaleType.MATRIX
+        foregroundLayer.scaleType = ImageView.ScaleType.MATRIX
 
-        // Các layer khác giữ nguyên scaleType từ XML
-        // mountainLayer, treesLayer, foregroundLayer giữ scaleType gốc
-
-        // Đợi layout hoàn thành để setup background matrix
+        // Đợi layout hoàn thành để setup matrix cho tất cả layers
         backgroundLayer.post {
-            setupBackgroundMatrix()
+            setupAllMatrices()
             updateAllLayers()
         }
-
-        // Tính giới hạn di chuyển cho translation layers
-        maxMoveX = screenWidth * 0.08f   // 8% chiều rộng màn hình
-        maxMoveY = screenHeight * 0.05f  // 5% chiều cao màn hình
 
         // Đặt vị trí ban đầu ở giữa
         currentX = 0f
         currentY = 0f
     }
 
-    private fun setupBackgroundMatrix() {
-        val drawable = backgroundLayer.drawable ?: return
+    private fun setupAllMatrices() {
+        setupLayerMatrix(backgroundLayer, backgroundMatrix, backgroundScale) { width, height ->
+            backgroundImageWidth = width
+            backgroundImageHeight = height
+        }
+
+        setupLayerMatrix(mountainLayer, mountainMatrix, mountainScale) { width, height ->
+            mountainImageWidth = width
+            mountainImageHeight = height
+        }
+
+        setupLayerMatrix(treesLayer, treesMatrix, treesScale) { width, height ->
+            treesImageWidth = width
+            treesImageHeight = height
+        }
+
+        setupLayerMatrix(foregroundLayer, foregroundMatrix, foregroundScale) { width, height ->
+            foregroundImageWidth = width
+            foregroundImageHeight = height
+        }
+    }
+
+    private fun setupLayerMatrix(
+        imageView: ImageView,
+        matrix: Matrix,
+        scale: Float,
+        onImageSizeCalculated: (Float, Float) -> Unit
+    ) {
+        val drawable = imageView.drawable ?: return
 
         // Lấy kích thước của ImageView
-        val viewWidth = backgroundLayer.width.toFloat()
-        val viewHeight = backgroundLayer.height.toFloat()
+        val viewWidth = imageView.width.toFloat()
+        val viewHeight = imageView.height.toFloat()
 
         // Lấy kích thước gốc của ảnh
         val imageWidth = drawable.intrinsicWidth.toFloat()
         val imageHeight = drawable.intrinsicHeight.toFloat()
 
         // Tính scale để ảnh phủ kín view và có thể di chuyển
-        val scaleX = (viewWidth * backgroundScale) / imageWidth
-        val scaleY = (viewHeight * backgroundScale) / imageHeight
-        val scale = max(scaleX, scaleY)
+        val scaleX = (viewWidth * scale) / imageWidth
+        val scaleY = (viewHeight * scale) / imageHeight
+        val finalScale = max(scaleX, scaleY)
 
         // Tính vị trí để center ảnh
-        val scaledImageWidth = imageWidth * scale
-        val scaledImageHeight = imageHeight * scale
+        val scaledImageWidth = imageWidth * finalScale
+        val scaledImageHeight = imageHeight * finalScale
         val translateX = (viewWidth - scaledImageWidth) / 2f
         val translateY = (viewHeight - scaledImageHeight) / 2f
 
         // Thiết lập matrix
-        backgroundMatrix.reset()
-        backgroundMatrix.postScale(scale, scale)
-        backgroundMatrix.postTranslate(translateX, translateY)
+        matrix.reset()
+        matrix.postScale(finalScale, finalScale)
+        matrix.postTranslate(translateX, translateY)
 
-        backgroundLayer.imageMatrix = backgroundMatrix
+        imageView.imageMatrix = matrix
 
-        // Lưu thông tin để tính giới hạn
-        backgroundImageWidth = scaledImageWidth
-        backgroundImageHeight = scaledImageHeight
+        // Lưu thông tin kích thước
+        onImageSizeCalculated(scaledImageWidth, scaledImageHeight)
     }
 
     override fun onResume() {
@@ -170,63 +200,90 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     }
 
     private fun updateAllLayers() {
-        // Background layer - dùng Matrix (không có giới hạn đen)
-        updateBackgroundMatrix(currentX * backgroundSpeed, currentY * backgroundSpeed)
+        // Tất cả layers đều dùng Matrix với tốc độ khác nhau
+        updateLayerMatrix(
+            backgroundLayer,
+            backgroundMatrix,
+            backgroundScale,
+            backgroundImageWidth,
+            backgroundImageHeight,
+            currentX * backgroundSpeed,
+            currentY * backgroundSpeed
+        )
 
-        // Các layer khác - dùng translation với giới hạn
-        val mountainMoveX = max(-maxMoveX * 0.8f, min(currentX * mountainSpeed, maxMoveX * 0.8f))
-        val mountainMoveY = max(-maxMoveY * 0.8f, min(currentY * mountainSpeed, maxMoveY * 0.8f))
-        mountainLayer.translationX = mountainMoveX
-        mountainLayer.translationY = mountainMoveY
+        updateLayerMatrix(
+            mountainLayer,
+            mountainMatrix,
+            mountainScale,
+            mountainImageWidth,
+            mountainImageHeight,
+            currentX * mountainSpeed,
+            currentY * mountainSpeed
+        )
 
-        val treesMoveX = max(-maxMoveX * 0.6f, min(currentX * treesSpeed, maxMoveX * 0.6f))
-        val treesMoveY = max(-maxMoveY * 0.6f, min(currentY * treesSpeed, maxMoveY * 0.6f))
-        treesLayer.translationX = treesMoveX
-        treesLayer.translationY = treesMoveY
+        updateLayerMatrix(
+            treesLayer,
+            treesMatrix,
+            treesScale,
+            treesImageWidth,
+            treesImageHeight,
+            currentX * treesSpeed,
+            currentY * treesSpeed
+        )
 
-
-        val foregroundMoveX = max(-maxMoveX * 0.4f, min(currentX * foregroundSpeed, maxMoveX * 0.4f))
-        val foregroundMoveY = max(-maxMoveY * 0.4f, min(currentY * foregroundSpeed, maxMoveY * 0.4f))
-        foregroundLayer.translationX = foregroundMoveX
-        foregroundLayer.translationY = foregroundMoveY
+        updateLayerMatrix(
+            foregroundLayer,
+            foregroundMatrix,
+            foregroundScale,
+            foregroundImageWidth,
+            foregroundImageHeight,
+            currentX * foregroundSpeed,
+            currentY * foregroundSpeed
+        )
     }
 
-    private fun updateBackgroundMatrix(moveX: Float, moveY: Float) {
-        val drawable = backgroundLayer.drawable ?: return
-        val viewWidth = backgroundLayer.width.toFloat()
-        val viewHeight = backgroundLayer.height.toFloat()
+    private fun updateLayerMatrix(
+        imageView: ImageView,
+        matrix: Matrix,
+        scale: Float,
+        scaledImageWidth: Float,
+        scaledImageHeight: Float,
+        moveX: Float,
+        moveY: Float
+    ) {
+        val drawable = imageView.drawable ?: return
+        val viewWidth = imageView.width.toFloat()
+        val viewHeight = imageView.height.toFloat()
         val imageWidth = drawable.intrinsicWidth.toFloat()
         val imageHeight = drawable.intrinsicHeight.toFloat()
 
         // Tính scale
-        val scaleX = (viewWidth * backgroundScale) / imageWidth
-        val scaleY = (viewHeight * backgroundScale) / imageHeight
-        val scale = max(scaleX, scaleY)
+        val scaleX = (viewWidth * scale) / imageWidth
+        val scaleY = (viewHeight * scale) / imageHeight
+        val finalScale = max(scaleX, scaleY)
 
         // Tính vị trí center ban đầu
-        val scaledImageWidth = imageWidth * scale
-        val scaledImageHeight = imageHeight * scale
         val baseCenterX = (viewWidth - scaledImageWidth) / 2f
         val baseCenterY = (viewHeight - scaledImageHeight) / 2f
 
         // Tính giới hạn di chuyển
-        val maxBackgroundMoveX = (scaledImageWidth - viewWidth) / 2f
-        val maxBackgroundMoveY = (scaledImageHeight - viewHeight) / 2f
+        val maxMoveX = (scaledImageWidth - viewWidth) / 2f
+        val maxMoveY = (scaledImageHeight - viewHeight) / 2f
 
         // Giới hạn di chuyển
-        val limitedMoveX = max(-maxBackgroundMoveX, min(moveX, maxBackgroundMoveX))
-        val limitedMoveY = max(-maxBackgroundMoveY, min(moveY, maxBackgroundMoveY))
+        val limitedMoveX = max(-maxMoveX, min(moveX, maxMoveX))
+        val limitedMoveY = max(-maxMoveY, min(moveY, maxMoveY))
 
-        // Đảo ngược hướng di chuyển
-        val finalX = baseCenterX - limitedMoveX // Đổi dấu từ + thành -
-        val finalY = baseCenterY - limitedMoveY // Đổi dấu từ + thành -
+        // Đảo ngược hướng di chuyển để tạo hiệu ứng parallax tự nhiên
+        val finalX = baseCenterX - limitedMoveX
+        val finalY = baseCenterY - limitedMoveY
 
         // Thiết lập matrix
-        backgroundMatrix.reset()
-        backgroundMatrix.postScale(scale, scale)
-        backgroundMatrix.postTranslate(finalX, finalY)
+        matrix.reset()
+        matrix.postScale(finalScale, finalScale)
+        matrix.postTranslate(finalX, finalY)
 
-        backgroundLayer.imageMatrix = backgroundMatrix
-        backgroundLayer.invalidate()
+        imageView.imageMatrix = matrix
+        imageView.invalidate()
     }
 }

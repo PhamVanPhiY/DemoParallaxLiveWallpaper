@@ -11,8 +11,8 @@
         android:id="@+id/backgroundLayer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/background"
+        android:scaleType="matrix"
+        android:src="@drawable/b1"
         android:contentDescription="Background Layer" />
 
     <!-- Layer 2: Mountain Layer - Trung cảnh -->
@@ -20,17 +20,17 @@
         android:id="@+id/mountainLayer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
+        android:scaleType="matrix"
+        android:src="@drawable/shadow"
         android:contentDescription="Mountain Layer" />
 
     <!-- Layer 3: Trees Layer - Gần hơn -->
     <ImageView
         android:id="@+id/treesLayer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:scaleType="centerCrop"
-        android:layout_gravity="center"
-        android:src="@drawable/people"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="matrix"
+        android:src="@drawable/let"
         android:contentDescription="Trees Layer" />
 
     <!-- Layer 4: Foreground - Gần nhất -->
@@ -38,8 +38,8 @@
         android:id="@+id/foregroundLayer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:src="@drawable/foreground_layer"
+        android:scaleType="matrix"
+        android:src="@drawable/hahah"
         android:contentDescription="Foreground Layer" />
 
     <!-- UI Overlay -->
