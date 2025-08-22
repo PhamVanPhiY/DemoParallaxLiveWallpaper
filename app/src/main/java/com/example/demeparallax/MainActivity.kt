@@ -191,7 +191,6 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
     private fun updateBackgroundMatrix(moveX: Float, moveY: Float) {
         val drawable = backgroundLayer.drawable ?: return
-
         val viewWidth = backgroundLayer.width.toFloat()
         val viewHeight = backgroundLayer.height.toFloat()
         val imageWidth = drawable.intrinsicWidth.toFloat()
@@ -208,9 +207,9 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         val baseCenterX = (viewWidth - scaledImageWidth) / 2f
         val baseCenterY = (viewHeight - scaledImageHeight) / 2f
 
-        // Tính giới hạn di chuyển để không lộ màu đen
+        // Tính giới hạn di chuyển
         val maxBackgroundMoveX = (scaledImageWidth - viewWidth) / 2f
-        val maxBackgroundMoveY = (scaledImageHeight - viewHeight) / 2fg
+        val maxBackgroundMoveY = (scaledImageHeight - viewHeight) / 2f
 
         // Giới hạn di chuyển
         val limitedMoveX = max(-maxBackgroundMoveX, min(moveX, maxBackgroundMoveX))
@@ -220,11 +219,12 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         val finalX = baseCenterX + limitedMoveX
         val finalY = baseCenterY + limitedMoveY
 
-        // Thiết lập matrix với vị trí mới
+        // Thiết lập matrix
         backgroundMatrix.reset()
         backgroundMatrix.postScale(scale, scale)
         backgroundMatrix.postTranslate(finalX, finalY)
 
         backgroundLayer.imageMatrix = backgroundMatrix
+        backgroundLayer.invalidate() // Đảm bảo vẽ lại
     }
 }
